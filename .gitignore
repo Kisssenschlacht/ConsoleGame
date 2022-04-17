@@ -1,0 +1,6 @@
+bin
+obj
+resources
+.vs
+.vscode
+*.json
