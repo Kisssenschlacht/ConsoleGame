@@ -28,7 +28,7 @@ namespace ConsoleGame
         };
         readonly Dictionary<Item, TileType> tileTypeForItem = new Dictionary<Item, TileType>() {
             { Item.Stone, TileType.Stone },
-            { Item.Wood, TileType.Tree },
+            { Item.Wood, TileType.Wood },
             { Item.Sapling, TileType.Sapling },
             { Item.Clay, TileType.Clay}
         };
@@ -36,7 +36,7 @@ namespace ConsoleGame
             { TileType.Stone, () => new List<ItemAmount>() { new ItemAmount(Item.Stone, 1) } },
             { TileType.Tree, () => {
                 List<ItemAmount> list = new List<ItemAmount>();
-                list.Add(new ItemAmount(Item.Wood, 1));
+                list.Add(new ItemAmount(Item.Wood, RandomNumberGenerator.GetInt32(3) + 1 ));
                 if (RandomNumberGenerator.GetInt32(2) == 0)
                     list.Add(new ItemAmount(Item.Sapling, 1));
                 return list;
@@ -44,7 +44,8 @@ namespace ConsoleGame
             { TileType.Sapling, () => new List<ItemAmount>() { new ItemAmount(Item.Sapling, 1)}},
             { TileType.SaplingStageTwo, () => new List<ItemAmount>() { new ItemAmount(Item.Sapling, 1) } },
             { TileType.SaplingStageThree, () => new List<ItemAmount>() { new ItemAmount(Item.Sapling, 1) } },
-            { TileType.Clay, () => new List<ItemAmount>() { new ItemAmount(Item.Clay, 1) } }
+            { TileType.Clay, () => new List<ItemAmount>() { new ItemAmount(Item.Clay, 1) } },
+            { TileType.Wood, () => new List<ItemAmount>() { new ItemAmount(Item.Wood, 1) } }
         };
         readonly Dictionary<TileType, bool> isObstacle = new Dictionary<TileType, bool>() {
             { TileType.Empty, false },
@@ -53,7 +54,8 @@ namespace ConsoleGame
             { TileType.Sapling, true },
             { TileType.Clay, true },
             { TileType.SaplingStageTwo, true},
-            { TileType.SaplingStageThree, true}
+            { TileType.SaplingStageThree, true},
+            { TileType.Wood, true}
         };
         readonly Dictionary<TileType, char[,]> getChars = new Dictionary<TileType, char[,]>() {
             { TileType.Empty, fromString(new string[] {"   ", "   ", "   "}) },
@@ -62,11 +64,11 @@ namespace ConsoleGame
             { TileType.Sapling, fromString(new string[] { "   ", " + ", "   " })},
             { TileType.Clay, fromString(new string[] { "++", "+++", "+++"})},
             { TileType.SaplingStageTwo, fromString(new string[] {" . ", "_", " , "})},
-            { TileType.SaplingStageThree, fromString(new string[] {"   ", "/_\\", " | "})}
+            { TileType.SaplingStageThree, fromString(new string[] {"   ", "/_\\", " | "})},
+            { TileType.Wood, fromString(new string[] { "OOO", "OOO", "OOO" })}
         };
         readonly char[,] Player = fromString(new string[] { " @ ", "_|_", "| |" });
         const int width = 20;
         const int height = 10;
-        //:D
     }
 }

@@ -15,6 +15,8 @@ namespace ConsoleGame
     {
         // Change in production to false
         const bool DEBUG = true;
+        private readonly object runningLock = new object();
+        bool running = true;
         ProgramState programState = ProgramState.StartMenu;
         static readonly Program Instance = new Program();
         private GameState _state = new GameState(width, height);
@@ -28,10 +30,33 @@ namespace ConsoleGame
 
             Console.CursorVisible = false;
             
+            Thread inputHandlerThread = new Thread(new ThreadStart(async () => {
+                bool _running = false;
+                lock (runningLock)
+                {
+                    _running = running;
+                }
+                while (_running)
+                {
+                    lastPressed = Console.ReadKey(true);
+                    _running = !await HandleKeyInput();
+                    lock (runningLock)
+                    {
+                        running = _running;
+                    }
+                    await Task.Delay(10);
+                }
+            }));
+            inputHandlerThread.Start();
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            
-            while(true){
+            bool _running = false;
+            lock (runningLock)
+            {
+                _running = running;
+            }
+            while(_running){
                 Console.SetCursorPosition(0, 0);
                 switch (programState)
                 {
@@ -45,10 +70,13 @@ namespace ConsoleGame
                         print();
                         break;
                 }
-                lastPressed = Console.ReadKey(true);
-                if(await HandleKeyInput()) break;
                 Update(stopwatch.Elapsed);
                 stopwatch.Restart();
+                lock (runningLock)
+                {
+                    _running = running;
+                }
+                await Task.Delay(10);
             }
         }
         private void Update(TimeSpan elapsedTime)

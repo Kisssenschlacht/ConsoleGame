@@ -1,6 +1,6 @@
 namespace ConsoleGame
 {
-    struct Positions{
+    public struct Positions{
         public int x;
         public int y;
     }
