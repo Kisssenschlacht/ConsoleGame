@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace ConsoleGame
 {
     partial class Program
@@ -12,7 +14,7 @@ namespace ConsoleGame
             }
         }
         TileType placeTile(){
-            int random = new Random().Next() % 100;
+            int random = RandomNumberGenerator.GetInt32(100);
 
             if(random < 2) return TileType.Tree;
             if(random < 5) return TileType.Stone;
