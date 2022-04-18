@@ -121,8 +121,8 @@ namespace ConsoleGame
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.RightArrow:
                 case ConsoleKey.LeftArrow:
-                    destroyBlock();
-                    placeBlock();
+                    if ((lastPressed.Modifiers & ConsoleModifiers.Shift) == 0) destroyBlock();
+                    else placeBlock();
                     break;
                 case ConsoleKey.D0:
                 case ConsoleKey.D1:

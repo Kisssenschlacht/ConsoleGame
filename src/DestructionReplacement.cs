@@ -46,7 +46,6 @@ namespace ConsoleGame
         }
         PlaceBlockReturnType placeBlock(){
             Positions placementPosition = playerPosition;
-            if ((lastPressed.Modifiers & ConsoleModifiers.Shift) == 0) return PlaceBlockReturnType.NoAction;
             switch (lastPressed.Key)
             {
                 case ConsoleKey.RightArrow:
