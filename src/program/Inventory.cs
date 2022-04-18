@@ -4,7 +4,20 @@ namespace ConsoleGame{
         int _selectedIndex = 0;
         int SelectedIndex { get => _selectedIndex; set { if (value >= 0 && value < inventory.Count) _selectedIndex = value; } }
         ItemAmount SelectedItem { get {  KeyValuePair<Item, int> kvp = inventory.ElementAt(SelectedIndex); return new ItemAmount(kvp.Key, kvp.Value); } }
-
+        void checkSelectedIndex(){
+            if (lastPressed.Key >= ConsoleKey.D0 && lastPressed.Key <= ConsoleKey.D9)
+            {
+                SelectedIndex = (lastPressed.Key - ConsoleKey.D0 - 1) % 10;
+            }
+            switch (lastPressed.Key){
+                case ConsoleKey.OemPlus:
+                ++SelectedIndex;
+                break;
+                case ConsoleKey.OemMinus:
+                --SelectedIndex;
+                break;
+            }
+        }
         void AddToSelectedItem(int amount)
         {
             int newAmount = SelectedItem.Amount + amount;

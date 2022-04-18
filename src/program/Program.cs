@@ -141,19 +141,5 @@ namespace ConsoleGame
             }
             return false;
         }
-        void checkSelectedIndex(){
-            if (lastPressed.Key >= ConsoleKey.D0 && lastPressed.Key <= ConsoleKey.D9)
-            {
-                SelectedIndex = (lastPressed.Key - ConsoleKey.D0 - 1) % 10;
-            }
-            switch (lastPressed.Key){
-                case ConsoleKey.OemPlus:
-                ++SelectedIndex;
-                break;
-                case ConsoleKey.OemMinus:
-                --SelectedIndex;
-                break;
-            }
-        }
     }
 }
