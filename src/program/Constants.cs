@@ -59,5 +59,6 @@ namespace ConsoleGame
         readonly char[,] Player = fromString(new string[] { " @ ", "_|_", "| |" });
         const int width = 20;
         const int height = 10;
+        //:D
     }
 }
