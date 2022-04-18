@@ -20,6 +20,10 @@ namespace ConsoleGame
         readonly char[,] StartMenu = fromString(new string[] { "Hit enter to start the game!" });
         readonly char[,] QuickMenu = fromString(new string[] { "", " Press S to save map and inventory ", "", " Press L to load previous map", "" });
         public delegate List<ItemAmount> LootTable();
+        public delegate TileType? TileUpdate(TimeSpan elapsedTime);
+        readonly Dictionary<TileType, TileUpdate> tileUpdateForTileType = new Dictionary<TileType, TileUpdate>() {
+            { TileType.Sapling, (TimeSpan elapsedTime) => RandomNumberGenerator.GetInt32((int)((double)10/(double)elapsedTime.Milliseconds*(double)1000)) == 0 ? TileType.Tree : null }
+        };
         readonly Dictionary<Item, TileType> tileTypeForItem = new Dictionary<Item, TileType>() {
             { Item.Stone, TileType.Stone },
             { Item.Wood, TileType.Tree },

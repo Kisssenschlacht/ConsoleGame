@@ -57,8 +57,9 @@ namespace ConsoleGame
             {
                 for (int y = 0; y < height; ++y)
                 {
-                    if (Map[x, y] == TileType.Sapling && RandomNumberGenerator.GetInt32((int)((double)10/(double)elapsedTime.Milliseconds*(double)1000)) == 0)
-                        Map[x, y] = TileType.Tree;
+                    TileType? newTileType = tileUpdateForTileType.ContainsKey(Map[x, y]) ? tileUpdateForTileType[Map[x, y]](elapsedTime) : null;
+                    if (newTileType == null) continue;
+                    Map[x, y] = (TileType)newTileType;
                 }
             }
             return;
