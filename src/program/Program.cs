@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace ConsoleGame
 {
@@ -46,13 +47,20 @@ namespace ConsoleGame
                 }
                 lastPressed = Console.ReadKey(true);
                 if(await HandleKeyInput()) break;
-                await Update(stopwatch.Elapsed);
+                Update(stopwatch.Elapsed);
                 stopwatch.Restart();
             }
         }
-        private async Task Update(TimeSpan elapsedTime)
+        private void Update(TimeSpan elapsedTime)
         {
-            
+            for (int x = 0; x < width; ++x)
+            {
+                for (int y = 0; y < height; ++y)
+                {
+                    if (Map[x, y] == TileType.Sapling && RandomNumberGenerator.GetInt32((int)((double)10/(double)elapsedTime.Milliseconds*(double)1000)) == 0)
+                        Map[x, y] = TileType.Tree;
+                }
+            }
             return;
         }
         // returns whether the game loop should stop
