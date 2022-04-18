@@ -31,6 +31,7 @@ namespace ConsoleGame
             stopwatch.Start();
             
             while(true){
+                Console.SetCursorPosition(0, 0);
                 switch (programState)
                 {
                     case ProgramState.StartMenu:
@@ -45,7 +46,6 @@ namespace ConsoleGame
                 }
                 lastPressed = Console.ReadKey(true);
                 if(await HandleKeyInput()) break;
-                Console.SetCursorPosition(0, 0);
                 await Update(stopwatch.Elapsed);
                 stopwatch.Restart();
             }
