@@ -27,7 +27,8 @@ namespace ConsoleGame
         readonly Dictionary<Item, TileType> tileTypeForItem = new Dictionary<Item, TileType>() {
             { Item.Stone, TileType.Stone },
             { Item.Wood, TileType.Tree },
-            { Item.Sapling, TileType.Sapling }
+            { Item.Sapling, TileType.Sapling },
+            { Item.Clay, TileType.Clay}
         };
         readonly Dictionary<TileType, LootTable> itemForTileType = new Dictionary<TileType, LootTable> {
             { TileType.Stone, () => new List<ItemAmount>() { new ItemAmount(Item.Stone, 1) } },
@@ -38,17 +39,24 @@ namespace ConsoleGame
                     list.Add(new ItemAmount(Item.Sapling, 1));
                 return list;
             } },
-            { TileType.Sapling, () => new List<ItemAmount>() { new ItemAmount(Item.Sapling, 1)}}
+            { TileType.Sapling, () => new List<ItemAmount>() { new ItemAmount(Item.Sapling, 1)}},
+            { TileType.Clay, () => new List<ItemAmount>() { new ItemAmount(Item.Clay, 1) } }
         };
-        readonly Dictionary<TileType, bool> isObstacle = new Dictionary<TileType, bool>()
-        { { TileType.Empty, false }, { TileType.Stone, true }, { TileType.Tree, true }, {TileType.Sapling, true}};
+        readonly Dictionary<TileType, bool> isObstacle = new Dictionary<TileType, bool>() {
+            { TileType.Empty, false },
+            { TileType.Stone, true },
+            { TileType.Tree, true },
+            {TileType.Sapling, true },
+            { TileType.Clay, true }
+        };
         readonly Dictionary<TileType, char[,]> getChars = new Dictionary<TileType, char[,]>() {
             { TileType.Empty, fromString(new string[] {"   ", "   ", "   "}) },
             { TileType.Stone, fromString(new string[] {" # ", "## ", "###"}) },
             { TileType.Tree, fromString(new string[] {" * ", "/_\\", " | "}) },
-            {TileType.Sapling, fromString(new string[] { "+ _", "\\_/", " | " })}
+            { TileType.Sapling, fromString(new string[] { " . ", "...", " . " })},
+            { TileType.Clay, fromString(new string[] { "++", "+++", "+++"})}
         };
-        readonly char[,] Player = fromString(new string[] { " @ ", "@@@", " @ " });
+        readonly char[,] Player = fromString(new string[] { " @ ", "_|_", "| |" });
         const int width = 20;
         const int height = 10;
     }

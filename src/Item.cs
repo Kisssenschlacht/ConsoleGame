@@ -4,6 +4,7 @@ namespace ConsoleGame
     {
         Stone,
         Wood,
-        Sapling
+        Sapling,
+        Clay
     }
 }

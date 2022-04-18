@@ -18,6 +18,7 @@ namespace ConsoleGame
 
             if(random < 2) return TileType.Tree;
             if(random < 5) return TileType.Stone;
+            if(random < 6) return TileType.Clay;
             return TileType.Empty;
         }
         bool isIllegalPosition(){
