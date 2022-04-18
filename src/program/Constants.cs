@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace ConsoleGame
 {
     partial class Program
@@ -28,7 +30,7 @@ namespace ConsoleGame
             { TileType.Tree, () => {
                 List<ItemAmount> list = new List<ItemAmount>();
                 list.Add(new ItemAmount(Item.Wood, 1));
-                if (new Random().Next() % 2 == 0)
+                if (RandomNumberGenerator.GetInt32(2) == 0)
                     list.Add(new ItemAmount(Item.Sapling, 1));
                 return list;
             } },
