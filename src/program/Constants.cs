@@ -42,10 +42,14 @@ namespace ConsoleGame
         };
         readonly Dictionary<TileType, bool> isObstacle = new Dictionary<TileType, bool>()
         { { TileType.Empty, false }, { TileType.Stone, true }, { TileType.Tree, true }, {TileType.Sapling, true}};
-        readonly Dictionary<TileType, char> getChar = new Dictionary<TileType, char>()
-        { { TileType.Empty, ' ' }, { TileType.Stone, '#' }, { TileType.Tree, 'ß' }, {TileType.Sapling, '.'}};
-        const char Player = '@';
-        const int width = 50;
-        const int height = 12;
+        readonly Dictionary<TileType, char[,]> getChars = new Dictionary<TileType, char[,]>() {
+            { TileType.Empty, fromString(new string[] {"   ", "   ", "   "}) },
+            { TileType.Stone, fromString(new string[] {" # ", "## ", "###"}) },
+            { TileType.Tree, fromString(new string[] {" * ", "/_\\", " | "}) },
+            {TileType.Sapling, fromString(new string[] { "+ _", "\\_/", " | " })}
+        };
+        readonly char[,] Player = fromString(new string[] { " @ ", "@@@", " @ " });
+        const int width = 20;
+        const int height = 10;
     }
 }

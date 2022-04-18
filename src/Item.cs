@@ -1,6 +1,6 @@
 namespace ConsoleGame
 {
-    enum Item
+    enum Item : byte
     {
         Stone,
         Wood,

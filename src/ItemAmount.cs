@@ -1,6 +1,6 @@
 namespace ConsoleGame
 {
-    class ItemAmount
+    struct ItemAmount
     {
         public Item Item;
         public int Amount;

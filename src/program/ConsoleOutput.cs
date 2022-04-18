@@ -18,13 +18,25 @@ namespace ConsoleGame
             Console.Write(MenuToString(menu));
         }
         string MapToString(){
-            char[,] charArray = new char[height,width];
+            char[,] charArray = new char[height*3,width*3];
             for(int y = 0; y < height; ++y){
                 for(int x = 0;x < width; ++x){
-                    charArray[y, x] = x == playerPosition.x && y == playerPosition.y ? Player : getChar[Map[x, y]];
+                    addTo2DCharArray(ref charArray, x == playerPosition.x && y == playerPosition.y ? Player : getChars[Map[x, y]], y, x);
                 }
             }
             return generateBorder(charArray);
+        }
+        static void addTo2DCharArray(ref char[,] charArray, char[,] toAdd, int xOffset, int yOffset)
+        {
+            int width = toAdd.GetLength(0);
+            int height = toAdd.GetLength(1);
+            for (int x = 0; x < width; ++x)
+            {
+                for (int y = 0; y < height; ++y)
+                {
+                    charArray[xOffset * 3 + x, yOffset * 3 + y] = toAdd[x, y];
+                }
+            }
         }
         static string MenuToString(char[,] menu) {
             return generateBorder(menu, 1, 1);
@@ -34,8 +46,8 @@ namespace ConsoleGame
             int fromHeight = from.GetLength(0);
             int fromWidth = from.GetLength(1);
             StringBuilder sb = new StringBuilder((fromHeight + 2) * (fromWidth + 3));
-            sb.Append($"+{new string('-', width)}+\n");
-            for (; topSpacing > 0; --topSpacing) sb.Append($"|{new string(spacing, width)}|\n");
+            sb.Append($"+{new string('-', fromWidth)}+\n");
+            for (; topSpacing > 0; --topSpacing) sb.Append($"|{new string(spacing, fromWidth)}|\n");
             for (int y = 0; y < fromHeight; ++y)
             {
                 sb.Append('|');
@@ -45,8 +57,8 @@ namespace ConsoleGame
                 }
                 sb.Append("|\n");
             }
-            for (; bottomSpacing > 0; --bottomSpacing) sb.Append($"|{new string(spacing, width)}|\n");
-            sb.Append($"+{new string('-', width)}+\n");
+            for (; bottomSpacing > 0; --bottomSpacing) sb.Append($"|{new string(spacing, fromWidth)}|\n");
+            sb.Append($"+{new string('-', fromWidth)}+\n");
             return sb.ToString();
         }
         string InventoryToString()
