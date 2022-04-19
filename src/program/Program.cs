@@ -16,6 +16,7 @@ namespace ConsoleGame
         // Change in production to false
         const bool DEBUG = true;
         private readonly object runningLock = new object();
+        private readonly object entitiesLock = new object();
         bool running = true;
         ProgramState programState = ProgramState.StartMenu;
         static readonly Program Instance = new Program();
@@ -23,6 +24,11 @@ namespace ConsoleGame
         ConsoleKeyInfo lastPressed;
         Positions playerPosition =  new Positions(){x = 4, y = 4};
         public static async Task Main(string[] args) { await Instance.Run(args); }
+        public event Update update;
+        public Program()
+        {
+            update += UpdateTiles;
+        }
         public async Task Run(string[] args)
         {
             Console.Clear();
@@ -70,7 +76,7 @@ namespace ConsoleGame
                         print();
                         break;
                 }
-                Update(stopwatch.Elapsed);
+                update.Invoke(stopwatch.Elapsed);
                 stopwatch.Restart();
                 lock (runningLock)
                 {
@@ -79,7 +85,7 @@ namespace ConsoleGame
                 await Task.Delay(10);
             }
         }
-        private void Update(TimeSpan elapsedTime)
+        private void UpdateTiles(TimeSpan elapsedTime)
         {
             for (int x = 0; x < width; ++x)
             {
