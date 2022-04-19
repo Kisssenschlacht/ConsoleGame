@@ -13,7 +13,10 @@ namespace ConsoleGame
         Clay,
         SaplingStageTwo,
         SaplingStageThree,
-        Wood
+        Wood,
+        Grass,
+        GrassStageTwo,
+        GrassStageThree
     }
 
     public class TileTypeJsonConverter : JsonConverter<TileType>

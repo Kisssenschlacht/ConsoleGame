@@ -28,6 +28,7 @@ namespace ConsoleGame
         public Program()
         {
             update += UpdateTiles;
+            update += UpdateEntities;
         }
         public async Task Run(string[] args)
         {
@@ -97,6 +98,14 @@ namespace ConsoleGame
                 }
             }
             return;
+        }
+        private void UpdateEntities(TimeSpan elapsedTime)
+        {
+            lock (entitiesLock)
+            {
+                if (RandomNumberGenerator.GetInt32(10*1000/elapsedTime.Milliseconds) == 0)
+                SpawnRandomEntity();
+            }
         }
         // returns whether the game loop should stop
     }

@@ -5,6 +5,7 @@ namespace ConsoleGame
         Stone,
         Wood,
         Sapling,
-        Clay
+        Clay,
+        Grass
     }
 }

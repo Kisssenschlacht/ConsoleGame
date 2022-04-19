@@ -63,6 +63,12 @@ namespace ConsoleGame
                 case ConsoleKey.D:
                     getMovement();
                     break;
+                case ConsoleKey.E:
+                    lock (entitiesLock)
+                    {
+                        SpawnRandomEntity();
+                    }
+                    break;
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.RightArrow:

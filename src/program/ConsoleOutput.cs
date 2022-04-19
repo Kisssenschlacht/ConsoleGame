@@ -21,10 +21,17 @@ namespace ConsoleGame
             char[,] charArray = new char[height*3,width*3];
             for(int y = 0; y < height; ++y){
                 for(int x = 0;x < width; ++x){
-                    addTo2DCharArray(ref charArray, x == playerPosition.x && y == playerPosition.y ? Player : getChars[Map[x, y]], y, x);
+                    addTo2DCharArray(ref charArray, GetCharsAtPosition(new Positions { x = x, y = y }), y, x);
                 }
             }
             return generateBorder(charArray);
+        }
+        char[,] GetCharsAtPosition(Positions position)
+        {
+            if (position == playerPosition) return Player;
+            Entity[] entityAtPosition = Entities.Where(x => x.Pos == position).ToArray();
+            if (entityAtPosition.Length > 0) return EntityTypeChars[entityAtPosition[0].Type];
+            return TileTypeChars[Map[position.x, position.y]];
         }
         static void addTo2DCharArray(ref char[,] charArray, char[,] toAdd, int xOffset, int yOffset)
         {
