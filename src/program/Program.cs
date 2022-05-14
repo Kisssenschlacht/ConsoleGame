@@ -103,7 +103,7 @@ namespace ConsoleGame
         {
             lock (entitiesLock)
             {
-                if (RandomNumberGenerator.GetInt32(10*1000/elapsedTime.Milliseconds) == 0)
+                if (RandomNumberGenerator.GetInt32(10*1000/elapsedTime.Milliseconds) == 0 && Entities.Count() < EntityLimit)
                 SpawnRandomEntity();
             }
         }

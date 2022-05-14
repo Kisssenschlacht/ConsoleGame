@@ -4,6 +4,7 @@ namespace ConsoleGame
 {
     partial class Program
     {
+
         const int MillisecondsInSec = 1000;
          private static char[,] fromString(string[] s)
         {
@@ -90,5 +91,6 @@ namespace ConsoleGame
         readonly char[,] Player = fromString(new string[] { " @ ", "_|_", "| |" });
         const int width = 20;
         const int height = 10;
+        const int EntityLimit = 10;
     }
 }

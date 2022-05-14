@@ -29,7 +29,11 @@ namespace ConsoleGame
         char[,] GetCharsAtPosition(Positions position)
         {
             if (position == playerPosition) return Player;
-            Entity[] entityAtPosition = Entities.Where(x => x.Pos == position).ToArray();
+            Entity[]? entityAtPosition = null;
+            lock (entitiesLock)
+            {
+                entityAtPosition = Entities.Where(x => x.Pos == position).ToArray();
+            }
             if (entityAtPosition.Length > 0) return EntityTypeChars[entityAtPosition[0].Type];
             return TileTypeChars[Map[position.x, position.y]];
         }
