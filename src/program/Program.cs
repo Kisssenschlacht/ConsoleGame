@@ -16,7 +16,6 @@ namespace ConsoleGame
     {
         // Change in production to false
         const bool DEBUG = true;
-        private readonly object runningLock = new object();
         public static readonly Program Instance = new Program();
         public GameState _state = new GameState();
         Position playerPosition = new Position() { x = 4, y = 4 };
