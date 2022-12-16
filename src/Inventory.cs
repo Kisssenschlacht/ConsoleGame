@@ -10,27 +10,6 @@ namespace ConsoleGame
         int _selectedIndex = 0;
         public int SelectedIndex { get => _selectedIndex; set { if (value >= 0 && value < HotbarSize) _selectedIndex = value; } }
         public ItemStack? SelectedItem => this[SelectedIndex];
-        /* public void AddToInventory(IItem item, ulong amount)
-        {
-            if (inventory.ContainsKey(item))
-            {
-                ulong newAmount = checked(inventory[item] + amount);
-                inventory[item] = newAmount;
-            }
-            else
-            {
-                inventory.Add(item, amount);
-            }
-            InvokeInventoryUpdate();
-        }
-        public void RemoveFromInventory(IItem item, ulong amount)
-        {
-            if (!inventory.ContainsKey(item)) throw new Exception("Tried to remove a nonexistant item from an inventory");
-            ulong newAmount = checked(inventory[item] - amount);
-            if (newAmount == 0) inventory.Remove(item);
-            else inventory[item] = newAmount;
-            InvokeInventoryUpdate();
-        } */
         public override int GetSize() => Items.Count();
         public override List<ItemStack?> GetItemStacks() => Items;
         public override void RemoveItem(int index) => Items.RemoveAt(index);
