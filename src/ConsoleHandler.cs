@@ -73,14 +73,33 @@ namespace ConsoleGame
                             if (InventoryCommand.StartsWith("swap"))
                             {
                                 int[] parts = InventoryCommand[4..].Split(':').Select(x => int.Parse(x)).Take(2).ToArray();
-                                if (parts.Length != 2) break;
-                                var tmp = Map.Player.Inventory[parts[0]];
-                                Map.Player.Inventory[parts[0]] = Map.Player.Inventory[parts[1]];
-                                Map.Player.Inventory[parts[1]] = tmp;
+                                int from;
+                                int to;
+                                if (parts.Length == 2)
+                                {
+                                    from = parts[0];
+                                    to = parts[1];
+                                }
+                                else if (parts.Length == 1)
+                                {
+                                    from = Map.Player.Inventory.SelectedIndex;
+                                    to = parts[0];
+                                }
+                                else break;
+                                var tmp = Map.Player.Inventory[from];
+                                Map.Player.Inventory[from] = Map.Player.Inventory[to];
+                                Map.Player.Inventory[to] = tmp;
+                                InventoryCommand = string.Empty;
                             }
                             break;
                         case ConsoleKey.Escape:
                             state = State.Game;
+                            break;
+                        case ConsoleKey.OemPlus:
+                            ++Map.Player.Inventory.SelectedIndex;
+                            break;
+                        case ConsoleKey.OemMinus:
+                            --Map.Player.Inventory.SelectedIndex;
                             break;
                         default:
                             InventoryCommand += lastPressed.KeyChar;
@@ -152,6 +171,7 @@ namespace ConsoleGame
                     int rows = (int)Math.Ceiling((decimal)Inventory.InventorySize / (decimal)Inventory.HotbarSize);
                     for (int i = 0; i < rows; ++i)
                         Console.WriteLine(InventoryToString(i * Inventory.HotbarSize, Math.Min(Inventory.InventorySize - i * Inventory.HotbarSize, 10)));
+                    Console.Write(InventoryCommand);
                     break;
                 case State.Game:
                     Console.WriteLine(MapToString());
