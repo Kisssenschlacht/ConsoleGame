@@ -8,8 +8,7 @@ namespace ConsoleGame.Tiles
             Constants.FromString(new string[] {"\"\"\"", "\"\"\"", "\"\"\"" })
         };
         protected override int TotalStages => 3;
-        readonly int[] GrowthTimesInMilliseconds = new int[] { 10000, 10000, 10000 };
-        protected override int GrowthTimeInMilliseconds(int stage) => GrowthTimesInMilliseconds[stage];
+        protected override int GrowthTimeInMilliseconds(int _) => 10000;
         public Grass(Map map, Position position) : base(map, position)
         {
         }
