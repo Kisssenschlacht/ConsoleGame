@@ -17,11 +17,8 @@ namespace ConsoleGame
         // Change in production to false
         const bool DEBUG = true;
         private readonly object runningLock = new object();
-        bool running = true;
-        ProgramState programState = ProgramState.StartMenu;
         public static readonly Program Instance = new Program();
         public GameState _state = new GameState();
-        ConsoleKeyInfo lastPressed;
         Position playerPosition = new Position() { x = 4, y = 4 };
         public static void Main(string[] args) { Instance.Run(args); }
         public event Update update;
