@@ -8,11 +8,11 @@ namespace ConsoleGame.Tiles
         public override bool IsObstacle => true;
         public abstract override char[,] Texture { get; }
         public abstract LootTable LootTable { get; }
-        public override void Break(Entity entity)
+        public override void OnBreak(Entity entity)
         {
-            Break(entity, ((entity as InventoryEntity) ?? throw new Exception()).Inventory.PlaceItemInInventory);
+            OnBreak(entity, ((entity as InventoryEntity) ?? throw new Exception()).Inventory.PlaceItemInInventory);
             Map.Tiles[Position.x, Position.y] = null;
         }
-        public virtual void Break(Entity entity, Func<ItemStack, ItemStack?> addToInventory) => LootTable(entity).ForEach(x => addToInventory(x));
+        public virtual void OnBreak(Entity entity, Func<ItemStack, ItemStack?> addToInventory) => LootTable(entity).ForEach(x => addToInventory(x));
     }
 }

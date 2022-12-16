@@ -37,7 +37,7 @@ namespace ConsoleGame
             }
             if (_state.Map.IsIllegalPosition(destructionPosition)) return DestroyBlockReturnType.IllegalPosition;
             if (!(_state.Map.Tiles[destructionPosition.x, destructionPosition.y]?.IsObstacle ?? false)) return DestroyBlockReturnType.NoObstacle;
-            _state.Map.Tiles[destructionPosition.x, destructionPosition.y]?.Break(_state.Map.Player);
+            _state.Map.Tiles[destructionPosition.x, destructionPosition.y]?.OnBreak(_state.Map.Player);
             return DestroyBlockReturnType.Ok;
         }
         PlaceBlockReturnType placeBlock()

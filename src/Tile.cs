@@ -12,7 +12,7 @@ namespace ConsoleGame
             Map = map;
             Position = position;
         }
-        public abstract void Break(Entity entity);
+        public abstract void OnBreak(Entity entity);
         public virtual void Update(TimeSpan elapsedTime) { }
     }
 }

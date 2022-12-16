@@ -2,6 +2,6 @@ namespace ConsoleGame
 {
     interface IBreakable
     {
-        void Break(Entity entity);
+        void OnBreak(Entity entity);
     }
 }

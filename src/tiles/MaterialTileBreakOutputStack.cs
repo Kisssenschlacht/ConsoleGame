@@ -6,6 +6,6 @@ namespace ConsoleGame.Tiles
 
         public abstract ItemStack BreakOutputStack { get; }
         public override LootTable LootTable => throw new NotImplementedException();
-        public override void Break(Entity entity, Func<ItemStack, ItemStack?> addToInventory) => addToInventory(BreakOutputStack);
+        public override void OnBreak(Entity entity, Func<ItemStack, ItemStack?> addToInventory) => addToInventory(BreakOutputStack);
     }
 }
