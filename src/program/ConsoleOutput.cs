@@ -13,7 +13,7 @@ namespace ConsoleGame
         void print()
         {
             Console.Clear();
-            Console.Write(MapToString() + '\n' + InventoryToString() + '\n');
+            Console.Write(MapToString() + '\n' + HotbarToString() + '\n');
         }
         static void printMenu(char[,] menu)
         {
@@ -73,7 +73,8 @@ namespace ConsoleGame
             sb.Append($"+{new string('-', fromWidth)}+\n");
             return sb.ToString();
         }
-        string InventoryToString() => string.Join(',', _state.Map.Player.Inventory.GetItemStacks().Take(Inventory.HotbarSize).Select((x, i) =>
+        string HotbarToString() => InventoryToString(0, Inventory.HotbarSize);
+        string InventoryToString(int from, int toExclusive) => string.Join(',', _state.Map.Player.Inventory.GetItemStacks().Skip(from).Take(toExclusive).Select((x, i) =>
             {
                 string separator = (i == _state.Map.Player.Inventory.SelectedIndex ? "|" : "");
                 string main = x.HasValue ? $"{x.Value.Item.DisplayName()}: {x.Value.Amount}" : " ";
