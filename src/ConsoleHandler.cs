@@ -72,7 +72,7 @@ namespace ConsoleGame
                         case ConsoleKey.Enter:
                             if (InventoryCommand.StartsWith("swap"))
                             {
-                                int[] parts = InventoryCommand[4..].Split(':').Select(x => int.Parse(x)).Take(2).ToArray();
+                                int[] parts = new string(InventoryCommand.Skip(4).ToArray()).Split(':').Select(x => int.Parse(x)).Take(2).ToArray();
                                 int from;
                                 int to;
                                 if (parts.Length == 2)
