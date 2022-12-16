@@ -16,60 +16,59 @@ namespace ConsoleGame
     }
     partial class Program
     {
-        DestroyBlockReturnType destroyBlock(){
-            Positions destructionPosition = playerPosition;
+        DestroyBlockReturnType destroyBlock()
+        {
+            Position destructionPosition = playerPosition;
             switch (lastPressed.Key)
             {
                 case ConsoleKey.RightArrow:
-                ++destructionPosition.x;
-                break;
+                    ++destructionPosition.x;
+                    break;
                 case ConsoleKey.LeftArrow:
-                --destructionPosition.x;
-                break;
+                    --destructionPosition.x;
+                    break;
                 case ConsoleKey.UpArrow:
-                --destructionPosition.y;
-                break;
+                    --destructionPosition.y;
+                    break;
                 case ConsoleKey.DownArrow:
-                ++destructionPosition.y;
-                break;
+                    ++destructionPosition.y;
+                    break;
                 default: return DestroyBlockReturnType.NoAction;
             }
-            if (isIllegalPosition(destructionPosition)) return DestroyBlockReturnType.IllegalPosition;
-            if (!isObstacle[Map[destructionPosition.x, destructionPosition.y]]) return DestroyBlockReturnType.NoObstacle;
-            List<ItemAmount> list = itemForTileType[Map[destructionPosition.x, destructionPosition.y]]();
-            foreach (ItemAmount itemAmount in list)
-            {
-                AddToInventory(itemAmount.Item, itemAmount.Amount);
-            }
-            Map[destructionPosition.x, destructionPosition.y] = TileType.Empty;
+            if (_state.Map.IsIllegalPosition(destructionPosition)) return DestroyBlockReturnType.IllegalPosition;
+            if (!(_state.Map.Tiles[destructionPosition.x, destructionPosition.y]?.IsObstacle ?? false)) return DestroyBlockReturnType.NoObstacle;
+            _state.Map.Tiles[destructionPosition.x, destructionPosition.y]?.Break(_state.Map.Player);
             return DestroyBlockReturnType.Ok;
         }
-        PlaceBlockReturnType placeBlock(){
-            Positions placementPosition = playerPosition;
+        PlaceBlockReturnType placeBlock()
+        {
+            Position placementPosition = playerPosition;
             switch (lastPressed.Key)
             {
                 case ConsoleKey.RightArrow:
-                ++placementPosition.x;
-                break;
+                    ++placementPosition.x;
+                    break;
                 case ConsoleKey.LeftArrow:
-                --placementPosition.x;
-                break;
+                    --placementPosition.x;
+                    break;
                 case ConsoleKey.UpArrow:
-                --placementPosition.y;
-                break;
+                    --placementPosition.y;
+                    break;
                 case ConsoleKey.DownArrow:
-                ++placementPosition.y;
-                break;
+                    ++placementPosition.y;
+                    break;
                 default: return PlaceBlockReturnType.NoAction;
             }
-            if (isIllegalPosition(placementPosition)) return PlaceBlockReturnType.IllegalPosition;
-            if (Map[placementPosition.x, placementPosition.y] != TileType.Empty) return PlaceBlockReturnType.NotEmpty;
-            if (inventory.Count == 0)
+            if (_state.Map.IsIllegalPosition(placementPosition)) return PlaceBlockReturnType.IllegalPosition;
+            if (_state.Map.Tiles[placementPosition.x, placementPosition.y] != null) return PlaceBlockReturnType.NotEmpty;
+            if (!_state.Map.Player.Inventory.SelectedItem.HasValue)
             {
                 return PlaceBlockReturnType.NoAction;
             }
-            Map[placementPosition.x, placementPosition.y] = tileTypeForItem[SelectedItem.Item];
-            AddToSelectedItem(-1);
+            var item = _state.Map.Player.Inventory.SelectedItem?.Item as IPlaceable;
+            if (item == null) return PlaceBlockReturnType.NoAction;
+            item.Place(_state.Map, placementPosition);
+            _state.Map.Player.Inventory.RemoveItem(_state.Map.Player.Inventory.SelectedIndex, 1);
             return PlaceBlockReturnType.Ok;
         }
     }

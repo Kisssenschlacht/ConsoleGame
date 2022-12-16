@@ -1,20 +1,16 @@
 namespace ConsoleGame
 {
-    public enum EntityType : byte
+    abstract class Entity : IUpdatable, IHealth, IPosition, ITexture
     {
-        Cow,
-        Sheep
-    }
-    public struct Entity
-    {
-        public EntityType Type;
-        public int Health;
-        public Positions Pos;
-        public Entity(EntityType type, int health, Positions pos)
+        public Map Map { get; init; }
+        public abstract int Health { get; set; }
+        public Position Position { get; set; }
+        public abstract char[,] Texture { get; }
+        public virtual void Update(TimeSpan elapsedTime) { }
+        protected Entity(Map map, Position position)
         {
-            Type = type;
-            Health = health;
-            Pos = pos;
+            Map = map;
+            Position = position;
         }
     }
 }

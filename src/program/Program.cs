@@ -19,10 +19,10 @@ namespace ConsoleGame
         private readonly object entitiesLock = new object();
         bool running = true;
         ProgramState programState = ProgramState.StartMenu;
-        static readonly Program Instance = new Program();
-        private GameState _state = new GameState(width, height);
+        public static readonly Program Instance = new Program();
+        public GameState _state = new GameState();
         ConsoleKeyInfo lastPressed;
-        Positions playerPosition =  new Positions(){x = 4, y = 4};
+        Position playerPosition = new Position() { x = 4, y = 4 };
         public static async Task Main(string[] args) { await Instance.Run(args); }
         public event Update update;
         public Program()
@@ -33,11 +33,11 @@ namespace ConsoleGame
         public async Task Run(string[] args)
         {
             Console.Clear();
-            generateMap();
 
             Console.CursorVisible = false;
-            
-            Thread inputHandlerThread = new Thread(new ThreadStart(async () => {
+
+            Thread inputHandlerThread = new Thread(new ThreadStart(async () =>
+            {
                 bool _running = false;
                 lock (runningLock)
                 {
@@ -63,15 +63,16 @@ namespace ConsoleGame
             {
                 _running = running;
             }
-            while(_running){
+            while (_running)
+            {
                 Console.SetCursorPosition(0, 0);
                 switch (programState)
                 {
                     case ProgramState.StartMenu:
-                        printMenu(StartMenu);
+                        printMenu(Constants.StartMenu);
                         break;
                     case ProgramState.QuickMenu:
-                        printMenu(QuickMenu);
+                        printMenu(Constants.QuickMenu);
                         break;
                     case ProgramState.Game:
                         print();
@@ -88,23 +89,16 @@ namespace ConsoleGame
         }
         private void UpdateTiles(TimeSpan elapsedTime)
         {
-            for (int x = 0; x < width; ++x)
-            {
-                for (int y = 0; y < height; ++y)
-                {
-                    TileType? newTileType = tileUpdateForTileType.ContainsKey(Map[x, y]) ? tileUpdateForTileType[Map[x, y]](elapsedTime) : null;
-                    if (newTileType == null) continue;
-                    Map[x, y] = (TileType)newTileType;
-                }
-            }
+            Parallel.ForEach(_state.Map.Tiles.Cast<Tile?>(), x => x?.Update(elapsedTime));
             return;
         }
         private void UpdateEntities(TimeSpan elapsedTime)
         {
             lock (entitiesLock)
             {
-                if (RandomNumberGenerator.GetInt32(10*1000/elapsedTime.Milliseconds) == 0 && Entities.Count() < EntityLimit)
-                SpawnRandomEntity();
+                Parallel.ForEach(_state.Map.Entities, x => { x?.Update(elapsedTime); });
+                if (RandomNumberGenerator.GetInt32(10 * 1000 / elapsedTime.Milliseconds) == 0 && _state.Map.Entities.Count() < Constants.EntityLimit)
+                    SpawnRandomEntity();
             }
         }
         // returns whether the game loop should stop

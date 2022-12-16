@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace ConsoleGame
 {
-    class SaveManager<T> where T: notnull
+    class SaveManager<T> where T : notnull
     {
         private JsonSerializerOptions? _jsonSerializerOptions;
         public SaveManager(JsonSerializerOptions? jsonSerializerOptions = null)

@@ -24,7 +24,7 @@ namespace ConsoleGame
                     break;
             }
             return false;
-        } 
+        }
         private async Task<bool> HandleKeyInputQuickMenu()
         {
             switch (lastPressed.Key)
@@ -86,9 +86,13 @@ namespace ConsoleGame
                 case ConsoleKey.D7:
                 case ConsoleKey.D8:
                 case ConsoleKey.D9:
+                    _state.Map.Player.Inventory.SelectedIndex = lastPressed.Key - ConsoleKey.D0;
+                    break;
                 case ConsoleKey.OemPlus:
+                    ++_state.Map.Player.Inventory.SelectedIndex;
+                    break;
                 case ConsoleKey.OemMinus:
-                    checkSelectedIndex();
+                    --_state.Map.Player.Inventory.SelectedIndex;
                     break;
             }
             return false;

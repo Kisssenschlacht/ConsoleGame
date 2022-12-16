@@ -4,7 +4,7 @@ namespace ConsoleGame
 {
     partial class Program
     {
-        private SaveManager<GameState> _saveManager = new SaveManager<GameState>(new JsonSerializerOptions { AllowTrailingCommas = Program.DEBUG, IncludeFields = true, PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = false, Converters = { new TileTypeJsonConverter(), new TileType2DArrayJsonConverter() } } );
+        private SaveManager<GameState> _saveManager = new SaveManager<GameState>(/* new JsonSerializerOptions { AllowTrailingCommas = Program.DEBUG, IncludeFields = true, PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = false, Converters = { new TileTypeJsonConverter(), new TileType2DArrayJsonConverter() } }  */);
         private async Task Save()
         {
             Console.Clear();
@@ -43,8 +43,8 @@ namespace ConsoleGame
             Console.Clear();
             Console.WriteLine("Please enter the path to the file to be loaded:");
             string? filepath = Console.ReadLine();
-            if(filepath == null) throw new Exception("Filepath was nul when loading");
-            if(!_saveManager.Exists(filepath)) 
+            if (filepath == null) throw new Exception("Filepath was nul when loading");
+            if (!_saveManager.Exists(filepath))
             {
                 Console.WriteLine("The file doesn't exist");
                 pause();
