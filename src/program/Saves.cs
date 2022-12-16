@@ -1,10 +1,10 @@
-using System.Text.Json;
+/* using System.Text.Json;
 
 namespace ConsoleGame
 {
     partial class Program
     {
-        private SaveManager<GameState> _saveManager = new SaveManager<GameState>(/* new JsonSerializerOptions { AllowTrailingCommas = Program.DEBUG, IncludeFields = true, PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = false, Converters = { new TileTypeJsonConverter(), new TileType2DArrayJsonConverter() } }  */);
+        private SaveManager<GameState> _saveManager = new SaveManager<GameState>(new JsonSerializerOptions { AllowTrailingCommas = Program.DEBUG, IncludeFields = true, PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = false, Converters = { new TileTypeJsonConverter(), new TileType2DArrayJsonConverter() } });
         private async Task Save()
         {
             Console.Clear();
@@ -56,4 +56,4 @@ namespace ConsoleGame
             return;
         }
     }
-}
+} */
