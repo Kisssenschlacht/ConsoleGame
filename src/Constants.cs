@@ -4,8 +4,6 @@ namespace ConsoleGame
 {
     class Constants
     {
-
-        public const int MillisecondsInSec = 1000;
         public static char[,] FromString(string[] s)
         {
             int sHeight = s.Length;
