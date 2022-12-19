@@ -115,7 +115,7 @@ namespace ConsoleGame
                     switch (lastPressed.Key)
                     {
                         case ConsoleKey.Q:
-                            running = false;
+                            if ((lastPressed.Modifiers & ConsoleModifiers.Alt) != 0) running = false;
                             break;
                         case ConsoleKey.Escape:
                             state = State.QuickMenu;
