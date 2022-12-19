@@ -3,10 +3,15 @@ namespace ConsoleGame.Entities
     abstract class PeacefulMob : Mob
     {
         protected PeacefulMob(Map map, Position position) : base(map, position) { }
+        List<Position>? Path { get; set; }
+        int saturation = 10;
         public override void Action()
         {
-            Position[] options = new Position[] { new Position() { x = 1 }, new Position() { x = -1 }, new Position() { y = 1 }, new Position() { y = -1 } }.Select(x => Position + x).Where(x => !Program.Instance._state.Map.IsObstructed(x)).ToArray();
-            Position = options.Random() ?? new Position() { x = 0, y = 0 };
+            if (Map.Tiles[Position.x, Position.y] is Tiles.Grass) return;
+            if ((Path == null || Path.Count == 0)) Path = Search(x => Map.Tiles[x.x, x.y] is Tiles.Grass);
+            if (Path.Count == 0) return;
+            Position += Path[0];
+            Path.RemoveAt(0);
         }
     }
 }
