@@ -27,11 +27,11 @@ namespace ConsoleGame
             if (random < 2) return new Tiles.Tree(this, position);
             if (random < 5) return new Tiles.Stone(this, position);
             if (random < 6) return new Tiles.Clay(this, position);
+            if (random < 8) return new Tiles.Grass(this, position);
             return null;
         }
         public bool IsObstructed(Position position) =>
-            IsIllegalPosition(position) ||
-            Tiles[position.x, position.y] != null;
+            IsIllegalPosition(position) || (Tiles[position.x, position.y]?.IsObstacle ?? false);
         public bool IsIllegalPosition(Position position) =>
             position.x >= Constants.width ||
             position.x < 0 ||

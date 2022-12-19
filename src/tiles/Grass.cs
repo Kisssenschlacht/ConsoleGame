@@ -7,6 +7,7 @@ namespace ConsoleGame.Tiles
             Constants.FromString(new string[] {" \" ", "\"\"\"", " \" " }),
             Constants.FromString(new string[] {"\"\"\"", "\"\"\"", "\"\"\"" })
         };
+        public override bool IsObstacle => false;
         protected override int TotalStages => 3;
         protected override int GrowthTimeInMilliseconds(int _) => 10000;
         public Grass(Map map, Position position) : base(map, position)

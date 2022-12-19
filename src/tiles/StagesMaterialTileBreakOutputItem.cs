@@ -9,8 +9,12 @@ namespace ConsoleGame.Tiles
             set
             {
                 _stage = value;
-                if (_stage == TotalStages - 1)
+                if (_stage >= TotalStages - 1)
+                {
                     FinalStageReached();
+                    _stage = TotalStages - 1;
+                }
+
                 else MillisecondsToWait = GrowthTimeInMilliseconds(_stage);
             }
         }
