@@ -101,6 +101,9 @@ namespace ConsoleGame
                         case ConsoleKey.OemMinus:
                             --Map.Player.Inventory.SelectedIndex;
                             break;
+                        case ConsoleKey.Backspace:
+                            if (InventoryCommand.Length > 0) InventoryCommand = InventoryCommand[..^1];
+                            break;
                         default:
                             InventoryCommand += lastPressed.KeyChar;
                             break;
